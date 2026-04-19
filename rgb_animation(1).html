@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POLAYADI SURA</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    @keyframes rgbShift {
+      0%   { color: #ff0040; text-shadow: 0 0 20px #ff0040, 0 0 40px #ff0040; }
+      16%  { color: #ff8800; text-shadow: 0 0 20px #ff8800, 0 0 40px #ff8800; }
+      33%  { color: #ffff00; text-shadow: 0 0 20px #ffff00, 0 0 40px #ffff00; }
+      50%  { color: #00ff88; text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88; }
+      66%  { color: #00ccff; text-shadow: 0 0 20px #00ccff, 0 0 40px #00ccff; }
+      83%  { color: #aa00ff; text-shadow: 0 0 20px #aa00ff, 0 0 40px #aa00ff; }
+      100% { color: #ff0040; text-shadow: 0 0 20px #ff0040, 0 0 40px #ff0040; }
+    }
+
+    @keyframes rgbBg {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes letterPop {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-14px) scale(1.12); }
+    }
+
+    @keyframes borderRgb {
+      0%   { border-color: #ff0040; box-shadow: 0 0 24px #ff004066; }
+      25%  { border-color: #00ff88; box-shadow: 0 0 24px #00ff8866; }
+      50%  { border-color: #00ccff; box-shadow: 0 0 24px #00ccff66; }
+      75%  { border-color: #aa00ff; box-shadow: 0 0 24px #aa00ff66; }
+      100% { border-color: #ff0040; box-shadow: 0 0 24px #ff004066; }
+    }
+
+    @keyframes scanline {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(500px); }
+    }
+
+    @keyframes subtitleFade {
+      0%, 100% { opacity: 0.4; letter-spacing: 0.3em; }
+      50%       { opacity: 1;   letter-spacing: 0.55em; }
+    }
+
+    .rgb-container {
+      background: #0a0a0a;
+      border-radius: 16px;
+      border: 2px solid #ff0040;
+      animation: borderRgb 4s linear infinite;
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .scanline-effect {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 95%, rgba(255,255,255,0.03) 100%);
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+
+    .moving-scan {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(0,255,136,0.15), transparent);
+      animation: scanline 3s linear infinite;
+      pointer-events: none;
+    }
+
+    .big-text {
+      font-family: 'Arial Black', Impact, sans-serif;
+      font-size: clamp(3.5rem, 14vw, 7rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      animation: rgbShift 3s linear infinite;
+      display: flex;
+      gap: 0.04em;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .big-text span {
+      display: inline-block;
+      animation: letterPop 2s ease-in-out infinite;
+    }
+
+    .big-text span:nth-child(1)  { animation-delay: 0.0s; }
+    .big-text span:nth-child(2)  { animation-delay: 0.1s; }
+    .big-text span:nth-child(3)  { animation-delay: 0.2s; }
+    .big-text span:nth-child(4)  { animation-delay: 0.3s; }
+    .big-text span:nth-child(5)  { animation-delay: 0.4s; }
+    .big-text span:nth-child(6)  { animation-delay: 0.5s; }
+    .big-text span:nth-child(7)  { animation-delay: 0.6s; }
+    .big-text span:nth-child(8)  { animation-delay: 0.7s; }
+
+    .subtitle {
+      font-size: clamp(0.65rem, 2vw, 0.9rem);
+      color: #777;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      animation: subtitleFade 3s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    .rgb-bar {
+      width: 80%;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(to right, #ff0040, #ff8800, #ffff00, #00ff88, #00ccff, #aa00ff, #ff0040);
+      background-size: 200% 100%;
+      animation: rgbBg 2s linear infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: #ff0040;
+      border-style: solid;
+      z-index: 3;
+      animation: borderRgb 4s linear infinite;
+    }
+    .corner.tl { top: 12px; left: 12px;   border-width: 2px 0 0 2px; }
+    .corner.tr { top: 12px; right: 12px;  border-width: 2px 2px 0 0; }
+    .corner.bl { bottom: 12px; left: 12px;  border-width: 0 0 2px 2px; }
+    .corner.br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="rgb-container">
+    <div class="scanline-effect"></div>
+    <div class="moving-scan"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <div class="rgb-bar"></div>
+
+    <div class="big-text">
+      <span>P</span><span>O</span><span>L</span>
+      <span>A</span><span>Y</span><span>A</span><span>D</span><span>I</span>
+    </div>
+
+    <p class="subtitle">I Hope Sura Blesses You</p>
+
+    <div class="rgb-bar"></div>
+  </div>
+
+</body>
+</html>
